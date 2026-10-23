@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCDD — Music Capsule</title>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <style>
+    :root{--ink:#e9edff;--muted:#9ca7c8;--panel:rgba(20,25,53,.76);--line:rgba(255,255,255,.12);--accent:#b4ff5c;--purple:#a78bfa;--danger:#ff7596}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#0a0e20;overflow-x:hidden}body:before,body:after{content:"";position:fixed;border-radius:50%;filter:blur(80px);z-index:-1;opacity:.38}body:before{width:430px;height:430px;background:#633bb9;left:-140px;top:-120px}body:after{width:450px;height:450px;background:#187d8d;right:-180px;bottom:-160px}.shell{width:min(1100px,calc(100% - 32px));margin:0 auto;padding:30px 0 54px}.brand{display:flex;align-items:center;gap:13px;margin-bottom:25px}.brand-mark{width:44px;height:44px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,var(--accent),#5de4e7);color:#10162b;font-weight:900;letter-spacing:-2px}.brand h1{font-size:1.1rem;letter-spacing:.11em;margin:0}.brand small{display:block;color:var(--muted);letter-spacing:0;font-size:.75rem;margin-top:2px}.tabs{display:flex;gap:8px;padding:7px;border:1px solid var(--line);background:rgba(7,10,28,.55);border-radius:16px;margin-bottom:20px}.tab{flex:1;padding:11px 8px;border:0;border-radius:11px;background:transparent;color:var(--muted);font:inherit;font-weight:700;cursor:pointer;transition:.2s}.tab.active{background:#242b50;color:white;box-shadow:0 7px 17px #06091980}.page{display:none}.page.active{display:block}.card{background:var(--panel);border:1px solid var(--line);border-radius:25px;backdrop-filter:blur(20px);box-shadow:0 18px 60px #00000030}.player-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:20px}.art-area{padding:30px;text-align:center}.cover{width:min(100%,360px);aspect-ratio:1;margin:0 auto 25px;border-radius:22px;overflow:hidden;background:linear-gradient(140deg,#2f376c,#171c3c);display:grid;place-items:center;box-shadow:0 20px 42px #0008}.cover img{width:100%;height:100%;object-fit:cover}.cover .note{font-size:5rem;filter:drop-shadow(0 5px 10px #0008)}.eyebrow{color:var(--accent);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.13em}.track-title{font-size:clamp(1.45rem,4vw,2rem);margin:7px 0 3px;word-break:break-word}.track-meta{margin:0;color:var(--muted);font-size:.9rem}.controls{padding:27px}.file-picker,.dropzone{border:1px dashed #7683b5;border-radius:16px;background:#10163188;padding:14px;transition:.2s}.file-picker:hover,.dropzone.drag{border-color:var(--accent);background:#1e2a3d}.file-picker input,.dropzone input{width:100%;color:var(--muted)}.progress-row{margin-top:24px}.times{display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem;margin-bottom:7px}input[type=range]{accent-color:var(--accent);width:100%;cursor:pointer}.transport{display:flex;align-items:center;justify-content:center;gap:16px;margin:22px 0}.icon-btn{border:0;background:transparent;color:var(--ink);font-size:1.35rem;cursor:pointer;width:43px;height:43px;border-radius:50%;transition:.2s}.icon-btn:hover{background:#ffffff15}.play{width:62px;height:62px;background:var(--accent);color:#11172c;font-size:1.45rem;box-shadow:0 10px 26px #b4ff5c38}.play:hover{transform:scale(1.06);background:#c7ff81}.settings{border-top:1px solid var(--line);padding-top:19px;display:grid;gap:17px}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:.9rem}.select{background:#151b38;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px}.switch{width:45px;height:25px;border:0;border-radius:20px;background:#39415e;position:relative;cursor:pointer;transition:.2s}.switch:after{content:"";width:19px;height:19px;border-radius:50%;background:white;position:absolute;left:3px;top:3px;transition:.2s}.switch.on{background:var(--accent)}.switch.on:after{left:23px}.eq{display:none;grid-template-columns:repeat(5,1fr);gap:9px;height:92px;align-items:end}.eq.show{display:grid}.eq i{display:block;border-radius:4px 4px 0 0;background:linear-gradient(var(--accent),var(--purple));animation:bounce .75s ease-in-out infinite alternate}.eq i:nth-child(1){height:39%;animation-delay:.1s}.eq i:nth-child(2){height:75%;animation-delay:.4s}.eq i:nth-child(3){height:52%}.eq i:nth-child(4){height:90%;animation-delay:.25s}.eq i:nth-child(5){height:35%;animation-delay:.55s}@keyframes bounce{to{height:18%}}.queue{padding:21px}.queue h2,.section-title{margin:0 0 14px;font-size:1rem}.queue-list{display:grid;gap:7px;max-height:398px;overflow:auto}.queue-item{display:flex;align-items:center;gap:12px;padding:11px;border-radius:12px;color:var(--muted);font-size:.86rem;cursor:pointer}.queue-item:hover,.queue-item.active{background:#ffffff12;color:var(--ink)}.queue-num{width:22px;color:var(--accent);font-weight:bold}.builder,.extract{padding:28px}.intro{max-width:650px;color:var(--muted);line-height:1.6;margin:4px 0 25px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field label{display:block;font-size:.84rem;font-weight:700;margin-bottom:8px}.field input[type=text]{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:#111731;color:white;font:inherit}.help{color:var(--muted);font-size:.76rem;display:block;margin-top:6px}.track-list{margin-top:22px;display:grid;gap:8px}.sort-track{display:flex;align-items:center;gap:11px;padding:12px 14px;border:1px solid var(--line);border-radius:13px;background:#111630;cursor:grab}.sort-track.dragging{opacity:.45}.drag-handle{color:var(--muted);font-size:1.15rem}.sort-track span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.album-options{margin:20px 0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.primary,.secondary{border:0;border-radius:12px;padding:13px 17px;font:inherit;font-weight:800;cursor:pointer;transition:.2s}.primary{background:var(--accent);color:#101629}.primary:hover{transform:translateY(-1px);box-shadow:0 8px 20px #b4ff5c33}.primary:disabled{opacity:.55;cursor:wait}.secondary{background:#ffffff12;color:var(--ink);border:1px solid var(--line)}.action-row{display:flex;align-items:center;gap:11px;flex-wrap:wrap}.status{font-size:.82rem;color:var(--muted)}.extract-list{margin-top:22px;display:grid;gap:8px}.extracted{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:13px;background:#111630}.extracted .name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.empty{color:var(--muted);padding:18px;text-align:center;border:1px dashed var(--line);border-radius:13px;font-size:.88rem}.hidden{display:none!important}@media(max-width:760px){.shell{width:min(100% - 20px,1100px);padding-top:16px}.player-grid,.form-grid{grid-template-columns:1fr}.art-area,.controls,.builder,.extract{padding:20px}.tabs{gap:3px}.tab{font-size:.76rem}.cover{max-width:270px}.queue{max-height:300px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="brand"><div class="brand-mark">N</div><div><h1>NCDD / MUSIC CAPSULE</h1><small>Nanda Cahya Dwi Darma &amp; friends</small></div></div>
+    <nav class="tabs" aria-label="Navigasi"><button class="tab active" data-page="player">♫ Pemutar</button><button class="tab" data-page="creator">✦ Buat NCDD</button><button class="tab" data-page="extractor">↥ Ekstrak</button></nav>
+
+    <section class="page active" id="player">
+      <div class="player-grid"><div class="card art-area"><div class="cover" id="cover"><span class="note">♫</span></div><div class="eyebrow" id="albumLabel">Belum ada album</div><h2 class="track-title" id="trackTitle">Pilih file .ncdd</h2><p class="track-meta" id="trackMeta">Music Capsule siap dimainkan</p></div>
+        <div class="card controls"><div class="file-picker"><strong>Buka album NCDD</strong><input id="playerFile" type="file" accept=".ncdd,application/zip" aria-label="Pilih NCDD"><span class="help">Pilih file album yang dibuat di halaman Buat NCDD.</span></div><div class="progress-row"><div class="times"><span id="elapsed">0:00</span><span id="duration">0:00</span></div><input id="seek" type="range" min="0" max="1000" value="0"></div><div class="transport"><button class="icon-btn" id="previous" title="Sebelumnya">⏮</button><button class="icon-btn play" id="play" title="Putar">▶</button><button class="icon-btn" id="next" title="Selanjutnya">⏭</button></div><div class="settings"><div class="setting-row"><span>Kecepatan</span><select id="speed" class="select"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1× Normal</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></div><div class="setting-row"><span>Equalizer visual</span><button id="eqToggle" class="switch" aria-label="Aktifkan equalizer"></button></div><div id="equalizer" class="eq"><i></i><i></i><i></i><i></i><i></i></div><div class="setting-row"><span>Putar otomatis</span><button id="autoplayToggle" class="switch" aria-label="Putar lagu berikutnya otomatis"></button></div><div class="setting-row"><span>Ulangi lagu</span><button id="repeatToggle" class="switch" aria-label="Ulangi lagu saat selesai"></button></div></div></div>
+        <aside class="card queue"><h2>Daftar lagu</h2><div class="queue-list" id="queue"><div class="empty">Album yang dibuka akan muncul di sini.</div></div></aside></div>
+    </section>
+
+    <section class="page" id="creator"><div class="card builder"><div class="eyebrow">NCDD File Creator</div><h2 class="section-title" style="font-size:1.55rem;margin-top:7px">Bungkus musik menjadi satu album.</h2><p class="intro">NCDD adalah paket album pribadi: audio, thumbnail, urutan lagu, dan pengaturan pemutaran tersimpan dalam satu file. Audio tetap memakai ekstensi asli supaya bisa langsung dibaca pemutar.</p><div class="form-grid"><div class="field"><label>File audio</label><div class="dropzone" id="audioDrop"><input id="audioFiles" type="file" multiple accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac"><span class="help">MP3, WAV, OGG, M4A, AAC, FLAC, dan format browser lain.</span></div></div><div class="field"><label>Thumbnail album</label><div class="dropzone"><input id="thumbnailFile" type="file" accept="image/*,.dng"><span class="help">Gambar disimpan sebagai <code>thumbnail.dng</code> di paket. Preview memakai format yang didukung browser.</span></div></div><div class="field"><label>Nama file album</label><input id="outputName" type="text" placeholder="misalnya: Chill Bareng"><span class="help">Ekstensi .ncdd ditambahkan otomatis.</span></div></div><div id="creatorTracks" class="track-list"><div class="empty">Pilih audio untuk menyusun urutannya.</div></div><div class="album-options"><div class="setting-row"><div><strong>Putar semua bersamaan</strong><span class="help">Semua trek dimulai bersamaan. Jika mati, lagu dimainkan bergantian.</span></div><button id="simultaneous" class="switch" aria-label="Putar semua bersamaan"></button></div></div><div class="action-row"><button id="createBtn" class="primary">Buat album NCDD</button><button id="downloadNCDD" class="secondary hidden">↓ Unduh file .ncdd</button><span class="status" id="creatorStatus"></span></div></div></section>
+
+    <section class="page" id="extractor"><div class="card extract"><div class="eyebrow">NCDD Extractor</div><h2 class="section-title" style="font-size:1.55rem;margin-top:7px">Keluarkan isi album.</h2><p class="intro">Pilih sebuah album NCDD untuk melihat thumbnail dan semua musiknya. Unduh satuan atau kemas kembali semuanya dalam ZIP.</p><div class="dropzone"><input id="extractFile" type="file" accept=".ncdd,application/zip"><span class="help">File tidak diunggah ke mana pun — semuanya diproses di browser kamu.</span></div><div id="extractList" class="extract-list"><div class="empty">Belum ada file untuk diekstrak.</div></div><div class="action-row" style="margin-top:20px"><button id="downloadAll" class="primary hidden">↓ Unduh semua sebagai ZIP</button><span class="status" id="extractStatus"></span></div></div></section>
+  </main>
+  <script>
+  (() => { 'use strict';
+    const $=s=>document.querySelector(s), fmt=s=>{s=Number.isFinite(s)?s:0;return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`};
+    const state={createTracks:[],album:null,index:0,audios:[],created:null,createdName:'album',extracted:[]}; let dragTrack=null,dragQueue=null,trackTransitioning=false;
+    document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.page').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.page).classList.add('active')});
+    const sim=$('#simultaneous');sim.onclick=()=>sim.classList.toggle('on'); const eq=$('#eqToggle');eq.onclick=()=>{eq.classList.toggle('on');$('#equalizer').classList.toggle('show',eq.classList.contains('on'))};
+    const autoplay=$('#autoplayToggle'),repeat=$('#repeatToggle'); autoplay.onclick=()=>{autoplay.classList.toggle('on');if(autoplay.classList.contains('on'))repeat.classList.remove('on')};repeat.onclick=()=>{repeat.classList.toggle('on');if(repeat.classList.contains('on'))autoplay.classList.remove('on')};
+    function renderCreator(){const el=$('#creatorTracks');el.innerHTML='';if(!state.createTracks.length){el.innerHTML='<div class="empty">Pilih audio untuk menyusun urutannya.</div>';return}state.createTracks.forEach((file,i)=>{const r=document.createElement('div');r.className='sort-track';r.draggable=true;r.dataset.i=i;r.innerHTML=`<span class="drag-handle">⠿</span><span>${i+1}. ${escapeHTML(file.name)}</span>`;r.addEventListener('dragstart',()=>{dragTrack=i;r.classList.add('dragging')});r.addEventListener('dragend',()=>r.classList.remove('dragging'));r.addEventListener('dragover',e=>e.preventDefault());r.addEventListener('drop',e=>{e.preventDefault();if(dragTrack===null||dragTrack===i)return;const [moved]=state.createTracks.splice(dragTrack,1);state.createTracks.splice(i,0,moved);dragTrack=null;renderCreator()});el.append(r)})}
+    function addAudio(files){state.createTracks=[...files].filter(f=>f.type.startsWith('audio/')||/\.(mp3|wav|ogg|m4a|aac|flac|opus)$/i.test(f.name));renderCreator()}
+    $('#audioFiles').onchange=e=>addAudio(e.target.files); const drop=$('#audioDrop');['dragenter','dragover'].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>addAudio(e.dataTransfer.files));
+    $('#createBtn').onclick=async()=>{if(!state.createTracks.length)return alert('Pilih minimal satu file audio dulu, ya!');if(!window.JSZip)return alert('Library pembuat paket belum termuat. Cek koneksi lalu muat ulang halaman.');const btn=$('#createBtn'),stat=$('#creatorStatus');btn.disabled=true;stat.textContent='Sedang membungkus album…';try{const zip=new JSZip(),tracks=[];for(let i=0;i<state.createTracks.length;i++){const f=state.createTracks[i], path=`audio/${String(i+1).padStart(2,'0')}-${safeName(f.name)}`;zip.file(path,f);tracks.push({name:f.name,path,type:f.type})}const thumb=$('#thumbnailFile').files[0];let thumbnail=null;if(thumb){zip.file('thumbnail.dng',thumb);thumbnail={path:'thumbnail.dng',originalName:thumb.name,type:thumb.type}}const title=$('#outputName').value.trim()||'NCDD Album';zip.file('metadata.json',JSON.stringify({format:'NCDD',version:2,title,creator:'Nanda Cahya Dwi Darma',createdAt:new Date().toISOString(),simultaneous:sim.classList.contains('on'),thumbnail,tracks},null,2));state.created=await zip.generateAsync({type:'blob',compression:'DEFLATE'});state.createdName=safeName(title)||'album';$('#downloadNCDD').classList.remove('hidden');stat.textContent=`Selesai! ${tracks.length} trek siap diunduh.`}catch(err){console.error(err);stat.textContent='Gagal membuat album.';alert('Ada masalah saat membuat NCDD: '+err.message)}finally{btn.disabled=false}};
+    $('#downloadNCDD').onclick=()=>download(state.created,`${state.createdName}.ncdd`);
+    $('#playerFile').onchange=e=>loadAlbum(e.target.files[0]);
+    async function loadAlbum(file){if(!file)return;if(!window.JSZip)return alert('Library pembaca paket belum termuat.');try{stopAll();const zip=await JSZip.loadAsync(await file.arrayBuffer());const metaFile=zip.file('metadata.json');if(!metaFile)throw Error('metadata.json tidak ditemukan — ini bukan NCDD yang valid.');const meta=JSON.parse(await metaFile.async('text'));if(meta.format!=='NCDD')throw Error('Format file bukan NCDD.');state.album={zip,meta};state.index=0;state.audios=[];for(const track of meta.tracks){const entry=zip.file(track.path);if(!entry)continue;const raw=await entry.async('blob'),blob=new Blob([raw],{type:track.type||''});state.audios.push({track,url:URL.createObjectURL(blob),audio:new Audio()});state.audios.at(-1).audio.src=state.audios.at(-1).url;state.audios.at(-1).audio.preload='metadata'}if(meta.thumbnail?.path&&zip.file(meta.thumbnail.path)){const raw=await zip.file(meta.thumbnail.path).async('blob'),blob=new Blob([raw],{type:meta.thumbnail.type||''});const url=URL.createObjectURL(blob);$('#cover').innerHTML='';const img=new Image();img.alt='Thumbnail album';img.src=url;img.onerror=()=>{$('#cover').innerHTML='<span class="note">♫</span>'};$('#cover').append(img)}else $('#cover').innerHTML='<span class="note">♫</span>';$('#albumLabel').textContent=meta.title||file.name.replace(/\.ncdd$/i,'');renderQueue();showTrack(0);$('#trackMeta').textContent=`${state.audios.length} trek · ${meta.simultaneous?'mode bersamaan':'mode bergantian'}`}catch(err){console.error(err);alert('Tidak dapat membuka NCDD: '+err.message)}}
+    function showTrack(i){if(!state.audios.length)return;state.index=(i+state.audios.length)%state.audios.length;const item=state.audios[state.index];$('#trackTitle').textContent=item.track.name.replace(/\.[^.]+$/,'');$('#elapsed').textContent='0:00';$('#duration').textContent=fmt(item.audio.duration);$('#seek').value=0;renderQueue()}
+    function renderQueue(){const q=$('#queue');q.innerHTML='';if(!state.audios.length){q.innerHTML='<div class="empty">Album yang dibuka akan muncul di sini.</div>';return}state.audios.forEach((x,i)=>{const r=document.createElement('div');r.className='queue-item'+(i===state.index?' active':'');r.draggable=true;r.title='Seret untuk mengubah urutan lagu';r.innerHTML=`<span class="queue-num">⠿ ${String(i+1).padStart(2,'0')}</span><span>${escapeHTML(x.track.name.replace(/\.[^.]+$/,''))}</span>`;r.addEventListener('dragstart',e=>{dragQueue=i;r.classList.add('dragging');e.dataTransfer.effectAllowed='move'});r.addEventListener('dragend',()=>{dragQueue=null;r.classList.remove('dragging')});r.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move'});r.addEventListener('drop',e=>{e.preventDefault();if(dragQueue===null||dragQueue===i)return;const playing=current(),[moved]=state.audios.splice(dragQueue,1);state.audios.splice(i,0,moved);state.index=state.audios.indexOf(state.audios.find(x=>x.audio===playing));renderQueue()});r.onclick=()=>{const wasPlaying=isPlaying();stopAll();showTrack(i);if(wasPlaying)play()};q.append(r)})}
+    function current(){return state.audios[state.index]?.audio} function isPlaying(){return state.audios.some(x=>!x.audio.paused)} function stopAll(){state.audios.forEach(x=>{x.audio.pause();x.audio.currentTime=0});$('#play').textContent='▶'} function play(){if(!state.audios.length)return;const set=state.album.meta.simultaneous?state.audios:[state.audios[state.index]];set.forEach(x=>{x.audio.playbackRate=Number($('#speed').value);x.audio.play().catch(()=>{})});$('#play').textContent='❚❚'}function pause(){state.audios.forEach(x=>x.audio.pause());$('#play').textContent='▶'}$('#play').onclick=()=>isPlaying()?pause():play();$('#previous').onclick=()=>{const p=isPlaying();stopAll();showTrack(state.index-1);if(p)play()};$('#next').onclick=()=>{const p=isPlaying();stopAll();showTrack(state.index+1);if(p)play()};$('#speed').onchange=()=>state.audios.forEach(x=>x.audio.playbackRate=Number($('#speed').value));$('#seek').oninput=e=>{const a=current();if(a?.duration)a.currentTime=a.duration*(e.target.value/1000)};setInterval(()=>{const a=current();if(!a)return;$('#elapsed').textContent=fmt(a.currentTime);$('#duration').textContent=fmt(a.duration);if(a.duration&&!$('#seek').matches(':active'))$('#seek').value=a.currentTime/a.duration*1000},250);document.addEventListener('ended',e=>{if(e.target!==current()||state.album?.meta.simultaneous)return;if(repeat.classList.contains('on')){e.target.currentTime=0;e.target.play();return}if(autoplay.classList.contains('on')){stopAll();showTrack(state.index+1);play()}else $('#play').textContent='▶'},true);
+    $('#extractFile').onchange=e=>extract(e.target.files[0]);async function extract(file){if(!file)return;const list=$('#extractList'),stat=$('#extractStatus');list.innerHTML='';state.extracted=[];stat.textContent='Membaca album…';try{const zip=await JSZip.loadAsync(await file.arrayBuffer());const meta=JSON.parse(await zip.file('metadata.json').async('text'));const files=[];if(meta.thumbnail?.path)files.push({name:meta.thumbnail.originalName||'thumbnail.dng',path:meta.thumbnail.path});meta.tracks.forEach(t=>files.push({name:t.name,path:t.path}));for(const f of files){const z=zip.file(f.path);if(!z)continue;const blob=await z.async('blob');state.extracted.push({name:f.name,blob});const row=document.createElement('div');row.className='extracted';row.innerHTML=`<span>${f.path.includes('thumbnail')?'▣':'♫'}</span><span class="name">${escapeHTML(f.name)}</span>`;const b=document.createElement('button');b.className='secondary';b.textContent='Unduh';b.onclick=()=>download(blob,f.name);row.append(b);list.append(row)}if(!state.extracted.length)list.innerHTML='<div class="empty">Tidak ada file yang ditemukan.</div>';$('#downloadAll').classList.toggle('hidden',!state.extracted.length);stat.textContent=`${state.extracted.length} file ditemukan.`}catch(err){console.error(err);list.innerHTML='<div class="empty">File tidak dapat diekstrak.</div>';stat.textContent='Pastikan file adalah NCDD yang valid.'}}
+    $('#downloadAll').onclick=async()=>{const zip=new JSZip();state.extracted.forEach(f=>zip.file(f.name,f.blob));download(await zip.generateAsync({type:'blob',compression:'DEFLATE'}),'isi-album-ncdd.zip')};function safeName(n){return n.replace(/[\\/:*?"<>|]/g,'_')}function escapeHTML(s){const x=document.createElement('span');x.textContent=s;return x.innerHTML}function download(blob,name){if(!blob)return;const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+  })();
+  </script>
+  <script>
+    // Use the visible progress as a reliable fallback when an audio "ended" event is missed.
+    (() => {
+      const seek = document.querySelector('#seek');
+      const autoplay = document.querySelector('#autoplayToggle');
+      const repeat = document.querySelector('#repeatToggle');
+      const next = document.querySelector('#next');
+      const play = document.querySelector('#play');
+      let advancing = false;
+
+      repeat.addEventListener('click', () => {
+        if (repeat.classList.contains('on')) autoplay.classList.remove('on');
+      });
+
+      setInterval(() => {
+        if (advancing || Number(seek.value) < 999 || (!repeat.classList.contains('on') && !autoplay.classList.contains('on'))) return;
+        advancing = true;
+        if (repeat.classList.contains('on')) {
+          autoplay.classList.remove('on');
+          if (window.__ncddLastAudio) {
+            window.__ncddLastAudio.currentTime = 0;
+            window.__ncddLastAudio.play().catch(() => {});
+          } else {
+            seek.value = 0;
+            seek.dispatchEvent(new Event('input', { bubbles: true }));
+            play.click();
+          }
+        } else if (autoplay.classList.contains('on')) {
+          next.click();
+          if (!play.textContent.includes('❚')) play.click();
+        }
+        setTimeout(() => { advancing = false; }, 500);
+      }, 100);
+    })();
+  </script>
+  <style>
+    #equalizer.eq{display:none;height:auto;margin-top:14px;padding:15px 10px 10px;background:#0d132d88;border:1px solid var(--line);border-radius:13px;overflow-x:auto}
+    #equalizer.eq.show{display:block}
+    .eq-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 4px 13px}
+    .eq-toolbar span{font-size:.76rem;color:var(--muted);font-weight:700}
+    .eq-flat{padding:7px 11px;font-size:.76rem}
+    .eq-bands{display:grid;grid-template-columns:repeat(31,32px);gap:6px;min-width:1172px;align-items:end}
+    .eq-band{display:grid;grid-template-rows:16px 166px 18px;justify-items:center;gap:5px;color:var(--muted);font-size:.62rem}
+    .eq-band output{font-size:.58rem;color:var(--accent);font-variant-numeric:tabular-nums}
+    .eq-band input[type=range]{width:150px;height:22px;margin:0;align-self:center;justify-self:center;transform:rotate(-90deg);accent-color:var(--accent);cursor:ns-resize}
+    .eq-band label{white-space:nowrap;font-size:.58rem}
+    .rta{display:none;width:100%;margin:23px auto 0;padding:14px;border:1px solid var(--line);border-radius:15px;background:#0d132d88;text-align:left}
+    .rta.show{display:block}
+    .rta-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 8px;color:var(--accent);font-size:.67rem;font-weight:800;letter-spacing:.08em}
+    .rta-head span{color:var(--muted);font-size:.59rem;letter-spacing:0}
+    .rta canvas{display:block;width:100%;height:220px}
+    @media(max-width:760px){.rta canvas{height:160px}}
+  </style>
+  <script>
+    // 31-band (1/3 octave) graphic equalizer for every audio object created by the player.
+    (() => {
+      const frequencies = [20,25,31.5,40,50,63,80,100,125,160,200,250,315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300,8000,10000,12500,16000,20000];
+      const panel = document.querySelector('#equalizer');
+      const filtersByAudio = new WeakMap();
+      let context;
+
+      function ensureContext() {
+        if (!context) context = new (window.AudioContext || window.webkitAudioContext)();
+        return context;
+      }
+      function applyBand(index, gain) {
+        activeFilters.forEach(filters => { if (filters[index]) filters[index].gain.value = gain; });
+      }
+      const activeFilters = new Set();
+      function labelFrequency(freq) {
+        return freq >= 1000 ? `${freq / 1000}k` : String(freq);
+      }
+
+      panel.replaceChildren();
+      const toolbar = document.createElement('div');
+      toolbar.className = 'eq-toolbar';
+      toolbar.innerHTML = '<span>31-band graphic EQ · −24 dB sampai +24 dB</span>';
+      const flat = document.createElement('button');
+      flat.type = 'button'; flat.className = 'secondary eq-flat'; flat.textContent = 'Datar';
+      const bands = document.createElement('div'); bands.className = 'eq-bands';
+      const sliders = frequencies.map((freq, index) => {
+        const band = document.createElement('div'); band.className = 'eq-band';
+        const value = document.createElement('output'); value.textContent = '0 dB';
+        const slider = document.createElement('input');
+        slider.type = 'range'; slider.min = '-24'; slider.max = '24'; slider.step = '0.5'; slider.value = '0';
+        slider.setAttribute('aria-label', `EQ ${labelFrequency(freq)} Hz`);
+        slider.oninput = () => { const gain = Number(slider.value); value.textContent = `${gain > 0 ? '+' : ''}${gain} dB`; applyBand(index, gain); };
+        const name = document.createElement('label'); name.textContent = labelFrequency(freq);
+        band.append(value, slider, name); bands.append(band); return slider;
+      });
+      flat.onclick = () => sliders.forEach(slider => { slider.value = '0'; slider.dispatchEvent(new Event('input')); });
+      toolbar.append(flat); panel.append(toolbar, bands);
+
+      const rta = document.createElement('section');
+      rta.className = 'rta';
+      rta.innerHTML = '<div class="rta-head"><strong>31-BAND RTA</strong><span>Output EQ</span></div><canvas aria-label="Real-Time Analyzer 31 band"></canvas>';
+      document.querySelector('.art-area').append(rta);
+      const rtaCanvas = rta.querySelector('canvas');
+      const rtaContext = rtaCanvas.getContext('2d');
+      const eqToggle = document.querySelector('#eqToggle');
+      eqToggle.addEventListener('click', () => rta.classList.toggle('show', eqToggle.classList.contains('on')));
+
+      function drawRta() {
+        requestAnimationFrame(drawRta);
+        if (!rta.classList.contains('show')) return;
+        const bounds = rtaCanvas.getBoundingClientRect();
+        const scale = window.devicePixelRatio || 1;
+        const width = Math.max(1, Math.round(bounds.width * scale));
+        const height = Math.max(1, Math.round(bounds.height * scale));
+        if (rtaCanvas.width !== width || rtaCanvas.height !== height) { rtaCanvas.width = width; rtaCanvas.height = height; }
+        rtaContext.clearRect(0, 0, width, height);
+        const analyser = window.__ncddLastAnalyser;
+        let data;
+        if (analyser) { data = new Uint8Array(analyser.frequencyBinCount); analyser.getByteFrequencyData(data); }
+        const gap = 2 * scale, bandWidth = (width - gap * 30) / 31;
+        frequencies.forEach((frequency, index) => {
+          let level = 0;
+          if (data && analyser) {
+            const bin = Math.round(frequency / (analyser.context.sampleRate / analyser.fftSize));
+            for (let offset = -1; offset <= 1; offset++) level = Math.max(level, data[Math.max(0, Math.min(data.length - 1, bin + offset))] || 0);
+          }
+          const barHeight = Math.max(2 * scale, Math.pow(level / 255, 1.45) * (height - 5 * scale));
+          const x = index * (bandWidth + gap), y = height - barHeight;
+          const gradient = rtaContext.createLinearGradient(0, height, 0, 0);
+          gradient.addColorStop(0, '#5de4e7'); gradient.addColorStop(.65, '#b4ff5c'); gradient.addColorStop(1, '#a78bfa');
+          rtaContext.fillStyle = gradient;
+          rtaContext.fillRect(x, y, bandWidth, barHeight);
+        });
+      }
+      drawRta();
+
+      const NativeAudio = window.Audio;
+      window.Audio = function (...args) {
+        const audio = new NativeAudio(...args);
+        let analyser;
+        audio.addEventListener('play', () => { window.__ncddLastAudio = audio; window.__ncddLastAnalyser = analyser; });
+        try {
+          const audioContext = ensureContext();
+          const source = audioContext.createMediaElementSource(audio);
+          const filters = frequencies.map((freq, index) => {
+            const filter = audioContext.createBiquadFilter();
+            filter.type = 'peaking'; filter.frequency.value = freq; filter.Q.value = 4.32; filter.gain.value = Number(sliders[index].value);
+            return filter;
+          });
+          source.connect(filters[0]);
+          analyser = audioContext.createAnalyser();
+          analyser.fftSize = 4096; analyser.smoothingTimeConstant = .78;
+          filters.forEach((filter, index) => filter.connect(filters[index + 1] || analyser));
+          analyser.connect(audioContext.destination);
+          filtersByAudio.set(audio, filters); activeFilters.add(filters);
+        } catch (error) { console.warn('EQ tidak dapat diaktifkan untuk audio ini.', error); }
+        return audio;
+      };
+      window.Audio.prototype = NativeAudio.prototype;
+      document.addEventListener('click', () => { if (context?.state === 'suspended') context.resume(); }, true);
+    })();
+  </script>
+  <script>
+    // NCDD is an archive container, not an audio re-encoder: write ZIP entries as-is.
+    (() => {
+      const generateArchive = window.JSZip?.prototype.generateAsync;
+      if (!generateArchive) return;
+      window.JSZip.prototype.generateAsync = function (options = {}, ...rest) {
+        return generateArchive.call(this, { ...options, compression: 'STORE' }, ...rest);
+      };
+    })();
+  </script>
+</body>
+</html>
